@@ -170,7 +170,7 @@ select ename, sal,(sal*12+100)"연봉" from emp order by (sal*12+100) desc;
 /*
 3. 급여가  2000을 넘는 사원의 이름과 급여를 내림차순으로 정렬하여 출력하시오
 */
-select ename, sal from emp order by sal desc;
+select ename, sal from emp where sal > 2000 order by sal desc;
 
 
 /*
@@ -181,7 +181,7 @@ select ename, empno from emp where empno like '%7782%';
 /*
 5. 급여가 2000에서 3000사이에 포함되지 않는 사원의 이름과 급여를 출력하시오.
 */
-select ename, sal from emp where sal <> 
+select ename, sal from emp where 
 
 /*
 6. 입사일이 81년2월20일 부터 81년5월1일 사이인 사원의 이름, 
