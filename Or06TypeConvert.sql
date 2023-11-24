@@ -124,117 +124,16 @@ select
     to_char(to_date('2022/12/25'),'day')조합
 from dual;
 
---@@ 문자열 2024년 01월 01년 은 어떤 요일이지 
-select
-    to_date('2024년 01월 01일','yyyy"년" mm"월" dd"일"'),
-    to_char(to_date('2024년 01월 01일','yyyy"년" mm"월" dd"일"'),'day') 
-    from dual;
-
-
---nvl() : null값을 다른 데이터로 변경하는 함수    (컬럼명, 대체할 값)
--- 이와 같이 덧셈을 하면 영업사원이 아닌 경우 급여가 null이 출력된다ㄷ.
--- 따라서 값이 null컴럼은 별도의 처리가 필요하다.
-select salary+commission_pct from employees;
--- null 값을 0으로 변경한 후 연산을 진행하므로 정상적인 결과가 출력됩니다.
-select first_name, commission_pct, salary*nvl(commission_pct,0)
-from employees;
---수고스럽게 이러는 이유는 1+null = null  null과의 연산값은 
---오직 null이기때문에 null과 연산이 필요한 상황이라면 0으로 변경후 진행
-
-
---decode java의 switch 문과 비슷한 역할을 하는 함수로 비슷하게 특정값에 해당하는 출력문이 있는 경우 사용합니다.
--- dedcode(컬럼명, 값1, 결과1, 값2, 결과2, 기본값)
--- 내부적인 코드값을 문자열로 변환하여 출력할때 많이 사용됩니다. 
-
-select 
-    first_name, last_name, department_id,
-    decode( department_id,
-    10, 'Adminstraction',
-    20, 'Marketing', --  
-    30, 'Purchasing', --  
-    40, 'Human Resource',
-    50, 'Shipping',
-    60, 'IT',
-    70, 'Public Realation',
-    80, 'Sales',
-    90, 'Excutive',
-    100, 'Finance',
-    110, 'Accountind','부서명 확인안됨')DP_ID
-    from employees;
-
-
--- case Java의  if-esle문과 같은 역할을 하는 함수 
--- case when 조건1 then값1   else 기본값
---사원테이블에서 각 부서번호에 해당하는 부서명을 출력하는 query문을 case문을 통해 
---쉼표 ㄴㄴ  when else end
-
-select 
-    first_name, last_name, department_id,
-    case 
-    when department_id=10 then 'Adminstraction'
-    when department_id=20 then 'Marketing'
-    when department_id=30 then 'Purchasing'
-    when department_id=40 then 'Human Resource'
-    when department_id=50 then 'Shipping'
-    when department_id=60 then 'IT'
-    when department_id=70 then 'PublicRealation'
-    when department_id=80 then 'Sales'
-    when department_id=90 then 'Excutive'
-    when department_id=100 then 'Finance'
-    when department_id=110 then 'Accounting'
-    else '부서명 없음'
-    end team_nameDP_ID
-    from employees
-    order by department_id;
 
 
 
-/*************************
-연습문제
-*************************/
---scott계정에서 진행합니다.
-
-/*
-1. substr() 함수를 사용하여 사원들의 입사한 년도와 입사한 달만 출력하시오.
-*/
 
 
-/*
-2. substr()함수를 사용하여 4월에 입사한 사원을 출력하시오. 
-즉, 연도에 상관없이 4월에 입사한 모든사원이 출력되면 된다.
-*/
 
 
-/*
-3. mod() 함수를 사용하여 사원번호가 짝수인 사람만 출력하시오.
-*/
 
 
-/*
-4. 입사일을 연도는 2자리(YY), 월은 숫자(MON)로 표시하고 요일은 
-약어(DY)로 지정하여 출력하시오.
-*/
 
-
-/*
-5. 올해 며칠이 지났는지 출력하시오. 현재 날짜에서 올해 1월1일을 뺀 결과를 
-출력하고 TO_DATE()함수를 사용하여 데이터 형을 일치 시키시오. 
-단, 날짜의 형태는 ‘01-01-2020’ 포맷으로 사용한다. 
-즉 sysdate - ‘01-01-2020’ 이와같은 연산이 가능해야한다. 
-*/
-
-/*
-6. 사원들의 메니져 사번을 출력하되 상관이 없는 사원에 대해서는 
-NULL값 대신 0으로 출력하시오.
-*/
-
-
-/*
-7. decode 함수로 직급에 따라 급여를 인상하여 출력하시오. 
-'CLERK'는 200, 'SALESMAN'은 180, 'MANAGER'은 150, 'PRESIDENT'는 100을
-인상하여 출력하시오.
-
-*/
 
 
 
