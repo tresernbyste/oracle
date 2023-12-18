@@ -57,7 +57,7 @@ select rpad(first_name,12) || rpad(last_name,12) from employees;  -- 활용버전
 -- 시작인덱스가 음수면 우측 끝부터 좌측으로 인덱스를 적용합니다.  (앞에 마이너스부르면 반대로)
 select substr('good morning john' ,8,4 )from dual;
 select substr('abcdefg',1,1)from dual;
-select substr(first_name,1,1)from dual;
+select substr(first_name,1,1)from employees;
 select rpad('ellen',5,'*')from dual;
 --lenght() 문자열 혹은 컬럼의 길이를 반환한다.
 -- 연구 ㄱ

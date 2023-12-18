@@ -1,11 +1,11 @@
-/************************
+/************************-- HR계정으로 하기 
 파일명: Or04Number.sql
 숫자(수학) 관련 함수
 숫자데이터를 처리하기 위한 숫자관련 함수를 알아보자
 검색,추출한 값을 수적으로 보다 정확하게 정의하기 위함으로 많이 이용됨.
 테이블 생성시 number 타입으로 선언된 컬럼에 저장된 데이터를 대상으로 한다.
 ************/
--- HR계정으로 하기 
+
 --현재 접속한 계정에 생성된 테이블, 뷰를 보여준다.
 select * from tab;
 select * from seoulit; -- 없으면 테이블 또는 뷰가 존재하지 않습니다. 라고 나와야함
@@ -38,7 +38,9 @@ select first_name, salary,trunc(commission_pct,2)"comm", (salary*(1+trunc(commis
 
 
 --소수점 관련함수 ceil() : 소수점 이하를 무조건 올림처리
+
 --                floor() : 소수점 이하를 무조건 버림처리
+
 --                round() : 소주점 이하를 무조건 반올림처리
 --                       있을때 : 숫자만큼 소수점이 표현되므로 그 다음수가 5이상이면 올림, 5미만이면 버림.
 --                       없을때 : 소수점 첫번째자리가 5이상이면 올림, 5미만이면 버림
@@ -73,6 +75,7 @@ select sqrt(49) from dual;
 
 -- 2.소수점 처리하기
 
+select first_name||last_name,salary, round( commission_pct, 1) from employees where commission_pct is not null;
 
 
 

@@ -1,7 +1,7 @@
 /************************
 파일명: Or03SelectBasic.sql
 처음으로 실행해 보는 질의어 (SQL문 혹은 Query문)
-개발자들 상이에서는 '시퀄'이라고 표현하기도 합니다.
+개발자들 사이에서는 '시퀄'이라고 표현하기도 합니다.
 설명 : select, where 등 가장 기본적인 DQL문 사용해보기
 ************/
 -- HR계정으로 하기 
@@ -22,7 +22,7 @@ SQL Developr 에서 주석 사용하기
 
 
 --사원테이블에 저장된 모든 레코드를 대상으로 모든 컬럼을 조회하기
---(쿼리문은 댓도문자를 구분하지 않는다.)
+--(쿼리문은 대소문자를 구분하지 않는다.)
 SELECT * from employees;
 SELECT * FROM employees;  --대소문자 구분을 하지 않는다.
 
@@ -55,7 +55,7 @@ select employee_id "사원아이디", first_name as "이름", last_name "성"
 select * from employees where last_name = 'Smith';
 
 
-
+and or
 --where 절에 2개 이상의 조건이 필요할때 and 혹은 or를 사용할 수 있다.
 --last_name = Smith 이면서 급여가 8000인 사원을 추출하시오 
 --컬럼이 문자형인 경우 싱글쿼테이션으로 감싸주고 숫자인 경우 생략한다.
@@ -67,7 +67,7 @@ select * from employees where last_name = 'Smith' and salary = 8000;
 
 --비교연산자를 통한 Qurey문 작성
 --이상, 이하와 같은 조건에 > <= 와 같은 비교연산자 
---날짜인 경우 이전, 이후 와 같은 조건도 가능하다.
+--날짜인 경우 이전, 이후 와 같은 조건도 가능하다. ###
 --급여가 5000 미만인 사원의 정보를 추출하시오.
 select * from employees where salary < 5000;
 
@@ -81,21 +81,22 @@ SELECT * from employees where hire_date >= '04/01/01';
 --in 연산자 : or 연산자와 같이 하나의 컴럼에 여러개의 값으로 조건을 걸고 싶을 때 사용
 --급여가 4200, 6400, 8000인 사원의 정보를 추출하시오
 select * from employees where salary = 4200 or salary = 6400 or salary = 8000;  -- in을 사용하지않고 기본적 or로 사용
-select * from employees where salary in (4200, 6400, 8000);  -- or in을 사용
+select * from employees where salary in (4200, 6400, 8000);  
 
 
 
---not 연산자 : 해당 조건이 아닌 레코드를 추출한다.
+--not 연산자 : 해당 조건이 아닌 레코드를 추출한다.  not , <>
 --부서번호가 50이 아닌 사원정보를 조회하는 SQL문을 작성하시오
-select * from employees where department_id <> 50;  -- 50이 아닌~  
+select department_id from employees where department_id <> 50;  -- 50이 아닌~  
 select * from employees where not (department_id = 50);
 
 
 
 --between and 연산자 : 컬럼의 구간을 정해 검색할때 사용
 --급여가 4000~8000 사이의 사원을 인출하시오
-select * from employees where salary >=4000 and salary <= 8000;
+select * from employees where salary >=4000 and salary <= 8000;    -- 4000= < salary >= 8000
 select * from employees where salary between 4000 and 8000;
+select * from employees where not salary between 4000 and 8000;
 
 
 
@@ -105,7 +106,7 @@ select * from employees where salary between 4000 and 8000;
 --담당 업무 아이디를 중복을 제거한 후 출력하시오 
 --전체 사원에 대한 담당업무명이 인출된다.
 select job_id from employees;
-select DISTINCT job_id from employees;
+select distinct job_id from employees;
 
 
 
@@ -192,6 +193,7 @@ select ename, empno from emp where empno like '%7782%';
 5. 급여가 2000에서 3000사이에 포함되지 않는 사원의 이름과 급여를 출력하시오.
 */
 select ename, sal from emp where sal < 2000 or sal > 3000;
+select ename, sal from emp where not sal between 2000 and 3000;
 
 
 
@@ -249,7 +251,7 @@ select ename from emp where ename like '__R%';
 13. 이름에 A와 E를 모두 포함하고 있는 사원의 이름을 표시하시오.
 */
 
-select ename from emp where ename like '%A%R%' ;
+select ename from emp where ename like '%A%E%' ;
 
 --아래와 같은 경우 A와 E가 포함되긴 하나 순서가 있으므로 E로 시작하고 A가 나오는 이름은 검색되지 않는다.
 
@@ -261,12 +263,12 @@ select ename from emp where ename like '%A%R%' ;
 14. 담당업무가 사무원(CLERK) 또는 영업사원(SALESMAN)이면서 급여가 
 $1600, $950, $1300 이 아닌 사원의 이름, 담당업무, 급여를 출력하시오. 
 */
-
+select ename, job, sal from emp where not sal in (1600,950,1300) and job in ('CLERK','SALESMAN');
 
 /*
 15. 커미션이 $500 이상인 사원의 이름과 급여 및 커미션을 출력하시오. 
 */
-
+select ename,sal,comm from emp where comm >= 500;
 
 
 

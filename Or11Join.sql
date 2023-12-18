@@ -469,6 +469,15 @@ select department_id D, department_name
 출력목록] 이름, 성, 담당업무ID, 급여
 */
 
+select * from employees;
+
+
+select EA.first_name, EA.last_name, EA.department_id, EA.salary
+    from employees E , employees EA
+        where E.department_id = EA.manager_id
+        and E.department_id = 108;
+        
+    
 
 
 /*
@@ -477,6 +486,15 @@ select department_id D, department_name
 출력목록] 부서번호, 부서명, 이름, 성, 급여, 담당업무ID
 ※ departments 테이블에 각 부서의 메니져가 있습니다.
 */
+
+select department_id from employees; 
+
+select D.department_id , D.department_name, E.first_name, last_name, salary, job_id ,D.manager_id
+    from departments D, employees E
+        where D.manager_id = E.employee_id;
+       
+        
+       
 
 
 /*

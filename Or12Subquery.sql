@@ -77,6 +77,7 @@ select first_name, last_name, job_title, salary
 --복수형 서브쿼리 : 다중행 서브쿼리라고도 하고 여러개의 행을 반환 하는 것으로
 --in any all exit를 사용해야한다.
 
+-- 복수형 서브쿼리 in 사용
 -- 형식 
 -- select * from 테이블명 
 --      where 컬럼 in (  select 컬럼 from 테이블명 where 조건...    )
@@ -87,6 +88,10 @@ select first_name, last_name, job_title, salary
 --@@@@
 -- 담당업무 별로 가장 높은 급여를 받는 사원의 명단을 조회하시오.
 -- 출력목록 : 사원아이디, 이름, 담당업무아이디, 급여
+
+
+
+
 
 select job_id , max(salary) from employees group by job_id; 
 
@@ -163,9 +168,7 @@ select first_name , salary from employees where salary >all ( select salary from
 
 --#########################################################################
 
---TOP QUERY : 
-
-
+--TOP QUERY 
 -- rownum : 테이블에서 레코드를 조회할 순서대로 순번이 부여되는 가상의 컬럼을 말한다. 해당 컬럼은 모든 테이블의 논리적으로 존재한다.
 -- 모든 계정에 존재하는 테이블 
 select * from dual;
@@ -206,18 +209,25 @@ select first_name, rownum from (select * from employees order by first_name asc)
 01.사원번호가 7782인 사원과 담당 업무가 같은 사원을 표시하시오.
 출력 : 사원이름, 담당 업무
 */
+select ename , empno from emp where empno = '7782';
+
+select ename, job from emp where job = ( select job empno from emp where empno = '7782' );
 
 
 /*
 02.사원번호가 7499인 사원보다 급여가 많은 사원을 표시하시오.
 출력 : 사원이름, 급여, 담당업무
 */
+select sal, empno from emp where empno = '7499';
 
+select ename, sal, job from emp where sal > (select sal from emp where empno = '7499');
 
 /*
 03.최소 급여를 받는 사원번호, 이름, 담당 업무 및 급여를 표시하시오.
 (그룹함수 사용)
 */
+
+select empno, ename, job, sal from emp  where sal = (select min(sal)  from emp );
 
 
 /*
@@ -229,6 +239,11 @@ select first_name, rownum from (select * from employees order by first_name asc)
 having절에 사용해야 한다. 즉, 평균급여가 1017인 직급을 출력하는 방식으로
 서브쿼리를 작성해야 한다. 
 */
+select job, avg(sal) from emp group by job having round(avg(sal)) = 1017;
+
+
+
+select job, avg(sal) from emp where job (select job from emp group by job having round(avg(sal)) = 1017);
 
 
 
@@ -236,12 +251,20 @@ having절에 사용해야 한다. 즉, 평균급여가 1017인 직급을 출력하는 방식으로
 05.각 부서의 최소 급여를 받는 사원의 이름, 급여, 부서번호를 표시하시오.
 */
 
+select ename, sal, deptno from emp where sal in ( select min(sal) from emp group by deptno );
+
+
+
 
 /*
 06.담당 업무가 분석가(ANALYST)인 사원보다 급여가 적으면서 
 업무가 분석가(ANALYST)가 아닌 사원들을 표시(사원번호, 이름, 담당업무, 급여)
 하시오.
 */
+
+select sal from emp where job = 'ANALYST';
+select empno, ename, job, sal from emp 
+    where not all ( select sal from emp where job = 'ANALYST' and 
 
 /*
 ANALYST 업무를 통한 결과가 1개이므로 아래와 같이 단일행 연산자로 서브쿼리를
